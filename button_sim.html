@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="custom.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>button simulator (INCOMPLETE)</title>
+</head>
+<body>
+    <h1 class="cashsgn">money: <span id="cash">0</span>$</h1>
+    <h2 class="multsgn">multiplier: x<span id="multi">1</span></h2>
+    <details>
+        <summary>multiplier buttons</summary>
+        <button onclick=buyMulti(10,1) class="multibtn">10$ = +1 multiplier</button><br>
+        <button onclick=buyMulti(60,5) class="multibtn">60$ = +5 multiplier</button><br>
+        <button onclick=buyMulti(135,10) class="multibtn">135$ = +10 multiplier</button>
+    </details>
+    <button onclick=save() class="svldbtn">save</button>
+    <button onclick=load() class="svldbtn">load</button>
+</body>
+<script>
+    var cash = 0
+    var multi = 1
+    function buyMulti(cst, get) {
+        if (cash >= cst) {
+            cash -= cst
+            multi += get
+            document.getElementById("cash").innerHTML = cash
+            document.getElementById("multi").innerHTML = multi
+        }
+    }
+    setInterval(function() {
+        cash += multi
+        document.getElementById("cash").innerHTML = cash
+    }, 1000);
+    setInterval(function() {
+        document.title = cash + "$ --- button simulator"
+    },100)
+    function save() {
+        localStorage.setItem('cash', cash)
+        localStorage.setItem('multi', multi)
+    }
+    function load() {
+        cash = localStorage.getItem('cash')
+        cash = parseInt(cash)
+        document.getElementById('cash').innerHTML = cash
+        multi = localStorage.getItem('multi')
+        multi = parseInt(multi)
+        document.getElementById('multi').innerHTML = multi
+    }
+</script>
+</html>
